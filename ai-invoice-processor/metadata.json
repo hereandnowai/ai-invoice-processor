@@ -1,0 +1,8 @@
+{
+  "name": "AI Invoice Processor",
+  "description": "An AI-powered application to automate invoice data extraction, validation, and review, streamlining accounts payable operations. Upload invoices (images or PDFs) and let AI extract key information for your review and processing.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "prompt": ""
+}

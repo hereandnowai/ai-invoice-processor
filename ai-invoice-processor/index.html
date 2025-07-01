@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Invoice Processor</title>
+  
+  <style>
+    :root {
+      /* Default to Tealish colors - will be updated by JS */
+      --primary-r: 6; --primary-g: 182; --primary-b: 212; /* #06b6d4 */
+      --primary-hover-r: 8; --primary-hover-g: 145; --primary-hover-b: 178; /* #0891b2 */
+      --primary-text-color: #ffffff;
+
+      --secondary-r: 245; --secondary-g: 158; --secondary-b: 11; /* #f59e0b */
+      --secondary-hover-r: 217; --secondary-hover-g: 119; --secondary-hover-b: 6; /* #d97706 */
+      --secondary-text-color: #1f2937;
+      
+      /* For company-specific colors, can also be CSS vars or hardcoded if they don't change with accent */
+      --company-teal-r: 0; --company-teal-g: 128; --company-teal-b: 128; /* #008080 */
+      --company-gold-r: 255; --company-gold-g: 215; --company-gold-b: 0; /* #FFD700 */
+    }
+  </style>
+  
+  <!-- Define tailwind.config FIRST -->
+  <script>
+    tailwind.config = {
+      darkMode: 'class', 
+      theme: {
+        extend: {
+          colors: {
+            'primary': {
+              DEFAULT: 'rgba(var(--primary-r), var(--primary-g), var(--primary-b), <alpha-value>)',
+              hover: 'rgba(var(--primary-hover-r), var(--primary-hover-g), var(--primary-hover-b), <alpha-value>)',
+              text: 'var(--primary-text-color)'
+            },
+            'secondary': {
+              DEFAULT: 'rgba(var(--secondary-r), var(--secondary-g), var(--secondary-b), <alpha-value>)',
+              hover: 'rgba(var(--secondary-hover-r), var(--secondary-hover-g), var(--secondary-hover-b), <alpha-value>)',
+              text: 'var(--secondary-text-color)'
+            },
+            'company-teal': 'rgba(var(--company-teal-r), var(--company-teal-g), var(--company-teal-b), <alpha-value>)', 
+            'company-gold': 'rgba(var(--company-gold-r), var(--company-gold-g), var(--company-gold-b), <alpha-value>)',
+          }
+        }
+      },
+      plugins: [
+        // Typography plugin is loaded via CDN URL
+      ]
+    };
+  </script>
+
+  <!-- THEN load Tailwind CDN script with plugins -->
+  <script src="https://cdn.tailwindcss.com/3.4.1?plugins=typography"></script>
+  
+  <link rel="icon" href="https://raw.githubusercontent.com/hereandnowai/images/refs/heads/main/logos/HNAI%20Fevicon%20-Teal%20%26%20Golden%20Logo%20-%20DESIGN%203%20-%20Raj-03.png" type="image/png">
+  <style>
+    /* Custom scrollbar for webkit browsers */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    .dark ::-webkit-scrollbar-track {
+      background: #2d3748; /* dark:bg-gray-700 */
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 10px;
+    }
+    .dark ::-webkit-scrollbar-thumb {
+      background: #555;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+    .dark ::-webkit-scrollbar-thumb:hover {
+      background: #333;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      overscroll-behavior-y: contain;
+    }
+    html.dark {
+        color-scheme: dark;
+    }
+    /* Basic focus visibility improvement */
+    *:focus-visible {
+        outline: 2px solid rgba(var(--primary-r), var(--primary-g), var(--primary-b), 0.6) !important;
+        outline-offset: 2px !important;
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script type="importmap">
+{
+  "imports": {
+    "react/": "https://esm.sh/react@^19.1.0/",
+    "react": "https://esm.sh/react@^19.1.0",
+    "@google/genai": "https://esm.sh/@google/genai@^1.5.1",
+    "react-dropzone": "https://esm.sh/react-dropzone@^14.3.8",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
+  <div id="root"></div>
+  <script>
+    // Initial theme setup (will be managed by React app's state later)
+    // This script ensures the correct theme is applied on initial load before React hydrates.
+    const preferredTheme = localStorage.getItem('appTheme') || 'system';
+    const accentColorName = localStorage.getItem('appAccentColor') || 'Default Teal'; // Or your default accent name
+    
+    // Apply accent color CSS variables here if ACCENT_COLORS can be accessed or hardcode defaults
+    // This part is tricky without access to ACCENT_COLORS from constants.ts directly in this script block.
+    // The React app will handle applying the correct accent variables once it loads.
+    // So, the :root style block with default CSS vars will take precedence initially.
+
+    if (preferredTheme === 'dark' || (preferredTheme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  </script>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
